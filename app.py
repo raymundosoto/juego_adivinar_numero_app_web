@@ -43,7 +43,7 @@ def index():
                             message = 'Error, intenta de nuevo.'
                     except ValueError:
                         pass
-
+# Oportunidades 
                 oportunidades_restantes -= 1
 
             if oportunidades_restantes == 0:
@@ -53,6 +53,8 @@ def index():
             if len(disparos_acertados) == 10:
                 message = '¡Felicidades! ¡Has encontrado todas las casillas ocultas!'
                 reiniciar_juego()
+
+
 
     return render_template('index.html', message=message, acertados=acertados, fallados=fallados, oportunidades_restantes=oportunidades_restantes, disparos_acertados=disparos_acertados)
 

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Juego de disparos</title>
+    <style>
+        /* Estilos para el tablero y las celdas */
+        table {
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+        table td {
+            width: 30px;
+            height: 30px;
+            border: 1px solid black;
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .acertado {
+            background-color: green;
+        }
+        .fallado {
+            background-color: red;
+        }
+    </style>
+    <script>
+        function disparar(x, y) {
+            document.getElementById('coord_x').value = x;
+            document.getElementById('coord_y').value = y;
+            document.getElementById('form_disparo').submit();
+            document.getElementById('coord_x').value = '';
+            document.getElementById('coord_y').value = '';
+        }
+    </script>
+</head>
+<body>
+    <h1>Juego de disparos</h1>
+    <p>Oportunidades restantes: {{ oportunidades_restantes }}</p>
+    <p>Acertados: {{ acertados }}, Fallados: {{ fallados }}</p>
+    <table>
+        {% for row in range(10) %}
+            <tr>
+                {% for col in range(10) %}
+                    {% set current_position = (row, col) %}
+                    {% if current_position in disparos_acertados %}
+                        <td class="acertado"></td>
+                    {% elif current_position in disparos_fallados %}
+                        <td class="fallado"></td>
+                    {% else %}
+                        <td onclick="disparar({{ row }}, {{ col }})"></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+    <form action="/" method="post">
+        <button type="submit" name="reset">Reiniciar Juego</button>
+    </form>
+    <form id="form_disparo" method="post">
+        <input type="hidden" id="coord_x" name="x">
+        <input type="hidden" id="coord_y" name="y">
+    </form>
+</body>
+</html>
